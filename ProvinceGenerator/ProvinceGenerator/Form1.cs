@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +15,7 @@ namespace ProvinceGenerator
 {
     public partial class Form1 : Form
     {
-        private static readonly int OFFSET = 25;
+        private static readonly int OFFSET = 30;
         private static readonly double PROBABILITY = 0.1;
         private static readonly int LENGTH = 10;
         private static readonly Random rnd = new Random();
@@ -181,6 +181,7 @@ namespace ProvinceGenerator
 
             Parallel.For(0, width, (x) =>
             {
+                Random innerRnd = new Random();
                 for(int y = 0; y < height; y++)
                 {
                     int pixel = PixelIndex(x, y, stride, bytesPerPixel);
@@ -189,7 +190,7 @@ namespace ProvinceGenerator
                         if(x > 0)
                         {
                             Color neighbour = ReadPixel(mapData, PixelIndex(x - 1, y, stride, bytesPerPixel));
-                            if(!IsWhite(neighbour) && !IsBlack(neighbour) && rnd.NextDouble() < PROBABILITY)
+                            if(!IsWhite(neighbour) && !IsBlack(neighbour) && innerRnd.NextDouble() < PROBABILITY)
                             {
                                 WritePixel(tempMapData, pixel, neighbour);
                             }
@@ -197,7 +198,7 @@ namespace ProvinceGenerator
                         if(x < width - 1)
                         {
                             Color neighbour = ReadPixel(mapData, PixelIndex(x + 1, y, stride, bytesPerPixel));
-                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && rnd.NextDouble() < PROBABILITY)
+                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && innerRnd.NextDouble() < PROBABILITY)
                             {
                                 WritePixel(tempMapData, pixel, neighbour);
                             }
@@ -205,7 +206,7 @@ namespace ProvinceGenerator
                         if(y > 0)
                         {
                             Color neighbour = ReadPixel(mapData, PixelIndex(x, y - 1, stride, bytesPerPixel));
-                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && rnd.NextDouble() < PROBABILITY)
+                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && innerRnd.NextDouble() < PROBABILITY)
                             {
                                 WritePixel(tempMapData, pixel, neighbour);
                             }
@@ -213,7 +214,7 @@ namespace ProvinceGenerator
                         if(y < height - 1)
                         {
                             Color neighbour = ReadPixel(mapData, PixelIndex(x, y + 1, stride, bytesPerPixel));
-                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && rnd.NextDouble() < PROBABILITY)
+                            if (!IsWhite(neighbour) && !IsBlack(neighbour) && innerRnd.NextDouble() < PROBABILITY)
                             {
                                 WritePixel(tempMapData, pixel, neighbour);
                             }
